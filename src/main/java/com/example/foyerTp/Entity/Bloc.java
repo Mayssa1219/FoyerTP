@@ -21,10 +21,10 @@ public class Bloc {
     private String nomBloc;
     private Long capaciteBloc;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "foyer_id")
     private Foyer foyer;
 
-    @OneToMany(mappedBy = "bloc", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bloc", cascade = CascadeType.ALL) //bidirectionnel
     private List<Chambre> chambres;
 }

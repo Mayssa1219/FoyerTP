@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="reservation")
@@ -24,12 +25,7 @@ public class Reservation {
 
     private boolean estValide;
 
-    @ManyToOne
-    @JoinColumn(name = "chambre_id")
-    private Chambre chambre;
-
-    @ManyToOne
-    @JoinColumn(name = "etudiant_id")
-    private Etudiant etudiant;
+    @ManyToMany(cascade=CascadeType.ALL)
+    private List<Etudiant> etudiants;
 
 }

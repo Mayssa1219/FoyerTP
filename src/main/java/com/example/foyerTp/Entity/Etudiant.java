@@ -1,5 +1,6 @@
 package com.example.foyerTp.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,10 +24,11 @@ public class Etudiant {
     String prenomEt;
     private Long cin;
     private String ecole;
-    @Temporal(TemporalType.DATE)
+
+    @JsonFormat(pattern = "yy-mm-dd")
     private Date dateNaissance;
 
-    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "etudiants", cascade = CascadeType.ALL)
     private List<Reservation> reservations;
 
 }
