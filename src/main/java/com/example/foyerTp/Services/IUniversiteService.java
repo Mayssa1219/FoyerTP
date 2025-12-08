@@ -9,4 +9,7 @@ public interface IUniversiteService {
     Universite addUniversite(Universite u);
     Universite updateUniversite(Universite u);
     void removeUniversite(Long idUniversite);
+    Universite affecterFoyerAUniversite(long idFoyer, String nomUniversite);
+    Universite desaffecterFoyerAUniversite(long idUniversite);
+
 }

@@ -3,6 +3,7 @@ package com.example.foyerTp.Controllers;
 import com.example.foyerTp.Entity.Chambre;
 import com.example.foyerTp.Services.IChambreService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/api/chambres")
 public class ChambreController {
+    @Autowired
     IChambreService chambreService;
     // http://localhost:8089/tpfoyer/chambre/retrieve-all-chambres
     @GetMapping("/retrieve-all-chambres")
