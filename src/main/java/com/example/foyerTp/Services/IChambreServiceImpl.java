@@ -89,14 +89,18 @@ public class IChambreServiceImpl implements IChambreService {
     public List<Chambre> getChambresParBlocEtType(long idBloc, TypeChambre typeC) {
         return chambreRepository.findByBlocAndType(idBloc, typeC);
     }
-
-    @Scheduled(cron = "0/15 * * * * *")
+    // * pour n'importe et / pour chaque et  chaque 15 secondes
+    // quand les secondes sont egaux à 15 secondes
+    //5/15 on commence à 5 secondes et apres chaque 15 secondes
+    @Scheduled(cron = "*/15 * * * * *") // mise à jour toutes les 15 secondes
     public void pourcentagesChambreParTypeChambre() {
+
         List<Chambre> chambres = chambreRepository.findAll();
         int totalChambres = chambres.size();
         log.info("Total des chambres : {}", totalChambres);
 
         if (totalChambres > 0) {
+
             Map<String, Integer> countByType = new HashMap<>();
 
             // Compter le nombre de chambres par type
@@ -110,11 +114,15 @@ public class IChambreServiceImpl implements IChambreService {
                 String type = entry.getKey();
                 int count = entry.getValue();
                 double pourcentage = (count * 100.0) / totalChambres;
-                log.info("Type {} : {} chambres ({:.2f}%)", type, count, pourcentage);
+
+                String pourcentageFormatte = String.format("%.2f", pourcentage);
+
+                log.info("Type {} : {} chambres ({}%)", type, count, pourcentageFormatte);
             }
+
         } else {
             log.info("Aucune chambre trouvée.");
         }
-}
+    }
 
 }
