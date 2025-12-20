@@ -5,7 +5,7 @@ import com.example.foyerTp.Entity.Chambre;
 import com.example.foyerTp.Entity.TypeChambre;
 import com.example.foyerTp.Repository.ChambreRepository;
 
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -58,6 +58,7 @@ public class IChambreServiceImpl implements IChambreService {
                         && c.getBloc().getFoyer().getUniversite().getNomUniversite().equalsIgnoreCase(nomUniversite))
                 .toList();
     }*/
+
    @Override
    public List<Chambre> getChambresParNomUniversite(String nomUniversite) {
        return chambreRepository.findChambresByNomUniversite(nomUniversite);
@@ -89,6 +90,7 @@ public class IChambreServiceImpl implements IChambreService {
     public List<Chambre> getChambresParBlocEtType(long idBloc, TypeChambre typeC) {
         return chambreRepository.findByBlocAndType(idBloc, typeC);
     }
+
     // * pour n'importe et / pour chaque et  chaque 15 secondes
     // quand les secondes sont egaux à 15 secondes
     //5/15 on commence à 5 secondes et apres chaque 15 secondes

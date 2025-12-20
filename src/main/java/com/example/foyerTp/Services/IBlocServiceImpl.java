@@ -7,15 +7,20 @@ import com.example.foyerTp.Repository.BlocRepository;
 import com.example.foyerTp.Repository.ChambreRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
-@AllArgsConstructor
 public class IBlocServiceImpl implements IBlocService {
-    
+    private static final Logger log = LoggerFactory.getLogger(IChambreServiceImpl.class);
+
     @Autowired
     BlocRepository blocRepository;
     @Autowired
@@ -88,6 +93,34 @@ public class IBlocServiceImpl implements IBlocService {
         blocRepository.save(bloc);
 
         return bloc;
+    }
+    @Scheduled(cron = "0 * * * * *")
+    public void listeChambreParBloc() {
+
+        List<Bloc> blocs = blocRepository.findAll();
+
+        if (blocs.isEmpty()) {
+            log.info("Aucun bloc trouvé.");
+            return;
+        }
+
+        for (Bloc bloc : blocs) {
+            log.info("Bloc {} : Capcite{} : {} chambres",
+                    bloc.getNomBloc(),
+                    bloc.getCapaciteBloc(),
+                    bloc.getChambres() != null ? bloc.getChambres().size() : 0);
+
+            if (bloc.getChambres() != null && !bloc.getChambres().isEmpty()) {
+                for (Chambre chambre : bloc.getChambres()) {
+                    log.info("Chambre {} (Type : {})",
+                            chambre.getNumeroChambre(),
+                            chambre.getTypeC());
+                }
+            } else {
+                log.info("Aucune chambre affectée à ce bloc.");
+            }
+
+        }
     }
 
 }
